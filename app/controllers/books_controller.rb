@@ -8,7 +8,8 @@ class BooksController < ApplicationController
   	@post_book = Book.new
 
   	@books = Book.all
-
+    
+    @book = Book.new
   end
 
   def show
