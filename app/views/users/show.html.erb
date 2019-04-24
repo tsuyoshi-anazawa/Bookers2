@@ -1,0 +1,88 @@
+<div class="container">
+<div class="row">
+	<div class="col-lg-3">
+		<h1>User info</h1>
+
+        <%= attachment_image_tag @user,:profile_image,format:'jpeg',fallback:"no_image.jpg",size:"110x110" %>
+
+		<table class="table">
+
+			<tbody>
+				<tr></tr>
+				<tr>
+					<th>name</th>
+					<th><%= @user.name %>
+				</tr>
+				<tr>
+					<th>introduction</th>
+					<th><%= @user.introduction %>
+				</tr>
+			</tbody>
+		</table>
+
+		<% if @user.id == current_user.id %>
+
+		<%= link_to edit_user_path(@user.id),class:"edit_user_#{@user.id}" do %>
+		<button class="col-xs-12 btn btn-default"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button>
+        <% end %>
+
+		<% else %>
+
+
+		<%= link_to user_path(current_user.id),class:"user_#{current_user.id}" do %>
+		<button class="col-xs-12 btn btn-default"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button>
+		<% end %>
+
+		<% end %>
+
+		<h1>New book</h1>
+
+		<%= form_for(@post_book,url: books_path) do |f| %>
+
+　　　　<div class="field row">
+		<h5>Title</h5>
+		<%= f.text_field :title,class:"col-xs-12 book_title" %>
+	   </div>
+
+		<div class="field row">
+		<h5>Opinion</h5>
+		<%= f.text_area :opinion,class:"col-xs-12 book_body" %>
+	    </div>
+
+
+        <div class="actions row">
+	    <p><%= f.submit "Create Book",class:"col-xs-12 btn btn-primary" %></p>
+	    </div>
+
+		<% end %>
+	</div>
+	<div class="col-lg-9">
+<h1>Books</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th></th><th>Title</th><th>Opinion</th><th colspan="3"></th>
+		</tr>
+	</thead>
+
+<% @books.each do |book| %>
+
+    <tbody>
+         <tr>
+    	     <td><%= link_to user_path(params[:id]),class:"user_#{params[:id]}" do %>
+    	     	 <%= attachment_image_tag book.user,:profile_image,format:'jpeg',fallback:"no_image.jpg",size:"50x50" %>
+    	     	 <% end %>
+    	     </td>
+    	     <td><%= link_to book_path(book.id),class:"book_#{book.id}" do %>
+    	     	  <%= book.title %>
+    	     	  <% end %>
+    	     </td>
+    	     <td><%= book.opinion %></td>
+        </tr>
+    </tbody>
+<% end %>
+</table>
+</div>
+</div>
+</div>
